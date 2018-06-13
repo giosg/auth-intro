@@ -24,8 +24,117 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-markdown>
+                    <script type="text/template">
+                        # Giosg authentication
+
+                        Introducing OAuth 2.0 authentication flows
+                    </script>
+                </section>
+				<section data-markdown>
+                    <script type="text/template">
+                        ## What's happening?
+
+                        - From now on, Giosg is an [OpenID Connect](http://openid.net/connect/) Provider
+                    </script>
+                </section>
+				<section data-markdown>
+                    <script type="text/template">
+                        ## Why?
+
+                        - Scalable development
+                        - Consistent user experience
+                        - Easier integration to Giosg
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Authentication flows
+
+                        - <span style="color: #4f4;">✔︎</span> Implicit Flow
+                        - <span style="color: #f44;">✕</span> Authorization Code Flow
+                        - <span style="color: #f44;">✕</span> Client Credential Grant
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Implicit Flow
+
+                        - **Redirect** the user browser to the Provider and back
+                        - Use the **access token** with API requests and WebSocket
+                        - Access token **expires** after 1 hour
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Login with Implicit Flow
+
+                        1. Redirect the browser to the Provider
+                        2. User enters credentials if not yet logged in
+                        3. Redirect back to the web app
+                        4. Web app parses the token from the URL
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Using access token
+
+                        - Can be persisted to session storage
+                        - Used as HTTP header
+                            ```
+                            Authorization: Bearer <TOKEN>
+                            ```
+                        - Include as `token` parameter to WebSocket connections
+                        - Dispose when expired after 1 hour
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## How to renew the token?
+
+                        There are several options to get a fresh access token when expired or about to expire.
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Option 1: Redirect again
+
+                        Renew by redirecting the browser again to the authorization service and back.
+
+                        - 😁 Easy to implement
+                        - 😡 Disruptive UX
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Option 2: Redirect in a pop-up
+
+                        Renew by navigating **a pop-up window** to the authorization service.
+                        Then pass the result to the main window.
+
+                        - 😁 Less disruptive
+                        - 😡 More difficult to implement
+                        - 😡 Pop-up blockers may prevent this
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Option 3: "Silent refresh"
+
+                        Renew by [navigating **an iframe**](https://www.scottbrady91.com/OpenID-Connect/Silent-Refresh-Refreshing-Access-Tokens-when-using-the-Implicit-Flow) to the authorization service.
+                        Then pass the result to the parent frame.
+
+                        - 😁 Refresh does not affect UX
+                        - 😡 More difficult to implement
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Documentation
+
+                        Technical details are documented at [developers.giosg.com/authentication.html](http://developers.giosg.com/authentication.html)
+                    </script>
+                </section>
 			</div>
 		</div>
 
@@ -37,6 +146,11 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+                slideNumber: true,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
