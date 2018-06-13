@@ -1715,3 +1715,11 @@ $controlsArrowAngleActive: 36deg;
 .zoomed .reveal .roll span:after {
 	visibility: hidden;
 }
+
+/*****************
+ * CUSTOM STYLES
+ *****************/
+.reveal {
+	background: transparent url(../img/logo.png) no-repeat center 10%;
+	background-size: 12% auto;
+}
