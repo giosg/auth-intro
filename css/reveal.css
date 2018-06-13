@@ -1406,3 +1406,6 @@ body {
 .reveal {
   background: transparent url(../img/logo.png) no-repeat center 10%;
   background-size: 12% auto; }
+
+section p > strong {
+  color: #fff; }
