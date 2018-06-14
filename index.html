@@ -179,6 +179,94 @@
                         Technical details are documented at [developers.giosg.com/authentication.html](http://developers.giosg.com/authentication.html)
                     </script>
                 </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        # Yleiset API ohjeet + permissionit
+                    </script>
+                </section>
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## APIen jakautuminen
+                            
+                            - sisäiset (authentikaation takana olevat) APIt jaettu kahteen osioon
+                            - julkiset (visitor) APIt ei omaa rajausta
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Organisaatiokohtaiset APIt
+                            
+                            - "organisaation laajuisten" asioiden lukemiseen ja muokkaamiseen
+                            - rajapinta alkaa `/api/v5/orgs/<organization_id>/…`
+                            - poikkeuksena voidaan antaa lukuoikeus
+                            </script>
+                        </section>
+                        <section data-markdown>
+                            <script type="text/template">
+                                ## Käyttäjäkohtaiset APIt
+                                
+                                - "henkilökohtaisten" asioiden lukemiseen ja muokkaamiseen 
+                                - rajapinta alkaa `/api/v5/users/<user_id>/…`
+                                </script>
+                        </section>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Koodin sijainti moduulissa
+
+                            - rajapinnan sijainti määrittyy sen tarjoaman resurssin perusteella 
+                            - esim. `/api/v5/users/<user_id>/rooms/<room_id>/visitors`
+                                olisi `visitors` moodulissa `api_v5` sub-packagen `views.py`:ssä jne.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Testien luominen
+
+                            - luodaan komennolla: `./manage.py maketests`
+                                - pidetään ajantasalla
+                                - tukee permissioneita
+                                - luo eri testejä riippuen mahdollistetaanko lukuoikeus jne.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Interfacet
+
+                            - frontissa käytetyt Interfacet
+                            - kertoo fronttikehittäjälle, että APIt on valmiita
+                            - kuuluu jokaiseen pullariin, missä on tehty muutoksia johonkin serializeriin
+                            - ainoastaan v5 serializerit tuettua
+                            - interfacejen puuttumiseen testit tulossa
+                        </script>
+                    </section>
+                    <section>
+                        <section data-markdown>
+                            <script type="text/template">
+                                ## Permissionit
+
+                                - kolme tuettua permissionia:
+                                    - `settings`
+                                    - `users`
+                                    - `reports`
+                                - permissionit määrittää mitä resursseja on mahdollista accessoida frontissa aka top bar
+                                - itse authentikaatioon ei vaikutusta (`UserApiToken` jne)
+                                - jos tarvetta uudelle, niin mahdollista saada perusteluita vastaan
+                            </script>
+                        </section>
+                        <section data-markdown>
+                            <script type="text/template">
+                                ## Permissionien käyttö koodissa
+
+                                - valmis helpperi `get_scope_permission`
+                                    - käytetään näkymien `permission_classes`:issa
+                                    - `get_scope_permission(['settings'], allow_read=True)`
+                                - ottaa listan vaadittuja permissioneita, joista jokin pitää olla käyttäjällä
+                            </script>
+                        </section>
+                    </section>
+                </section>
 			</div>
 		</div>
 
