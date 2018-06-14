@@ -49,14 +49,21 @@
                         - Easier integration to Giosg
                     </script>
                 </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## Implementation status
+                <section>
+                    <h2>Implementation status</h2>
 
-                        - ✅ Implicit Flow
-                        - ❌ Authorization Code Flow
-                        - ❌ Client Credential Grant
-                    </script>
+                    <div>
+                        <p><strong>✅ Implicit Flow</strong></p>
+                        <p><small>Frontend-focused web apps directly using the APIs</small></p>
+                    </div>
+                    <div class="fragment fade-up">
+                        <p><strong>❌ Authorization Code Flow</strong></p>
+                        <p><small>Backend-focused web apps with some UI, e.g. like Giosg Apps</small></p>
+                    </div>
+                    <div class="fragment fade-up">
+                        <p><strong>❌ Client Credential Grant</strong></p>
+                        <p><small>Pure-server apps and integrations, e.g. chat bots</small></p>
+                    </div>
                 </section>
                 <section data-markdown>
                     <script type="text/template">
@@ -139,6 +146,7 @@
                             - 😁 Less disruptive
                             - 😡 More difficult to implement
                             - 😡 Pop-up blockers may prevent this
+                            - 😡 Challenges on mobile
                         </script>
                     </section>
                     <section data-markdown>
@@ -153,6 +161,16 @@
                             - 😡 Fall back to other method if UI is required
                         </script>
                     </section>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Avoiding re-implementing stuff
+
+                        Currently using **"GiosgSDK"** to manage all the work with authentication flows.
+
+                        - `TODO:` Publish GiosgSDK for public use
+                        - `TODO:` Build shared UI toolkit for consistent UX
+                    </script>
                 </section>
                 <section data-markdown>
                     <script type="text/template">
