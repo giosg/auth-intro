@@ -35,9 +35,11 @@
                     <script type="text/template">
                         ## What's happening?
 
+                        - Creating better authentication & authorization
                         - From now on, Giosg is an [OpenID Connect](http://openid.net/connect/) Provider
                     </script>
                 </section>
+				<section data-background-image="img/architecture.png" data-background-size="contain"></section>
 				<section data-markdown>
                     <script type="text/template">
                         ## Why?
@@ -49,11 +51,11 @@
                 </section>
                 <section data-markdown>
                     <script type="text/template">
-                        ## Authentication flows
+                        ## Implementation status
 
-                        - <span style="color: #4f4;">✔︎</span> Implicit Flow
-                        - <span style="color: #f44;">✕</span> Authorization Code Flow
-                        - <span style="color: #f44;">✕</span> Client Credential Grant
+                        - ✅ Implicit Flow
+                        - ❌ Authorization Code Flow
+                        - ❌ Client Credential Grant
                     </script>
                 </section>
                 <section data-markdown>
@@ -65,68 +67,92 @@
                         - Access token **expires** after 1 hour
                     </script>
                 </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## Login with Implicit Flow
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Login with Implicit Flow
 
-                        1. Redirect the browser to the Provider
-                        2. User enters credentials if not yet logged in
-                        3. Redirect back to the web app
-                        4. Web app parses the token from the URL
-                    </script>
+                            <img src="img/login-flow.png">
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Login with Implicit Flow
+
+                            1. **Navigate** the browser to the authorization endpoint
+
+                                    https://service.giosg.com/identity/authorize?…
+
+                            2. User enters credentials if not yet logged in
+                            3. Redirect back to the web app
+                            4. Parse the access token from the **URL hash**
+                        </script>
+                    </section>
                 </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## Using access token
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Using the access token
 
-                        - Can be persisted to session storage
-                        - Used as HTTP header
-                            ```
-                            Authorization: Bearer <TOKEN>
-                            ```
-                        - Include as `token` parameter to WebSocket connections
-                        - Dispose when expired after 1 hour
-                    </script>
+                            <img src="img/token-usage.png">
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Using the access token
+
+                            - Can be persisted to session storage
+                            - Use in a HTTP header
+                                ```
+                                Authorization: Bearer <TOKEN>
+                                ```
+                            - Include as `token` parameter to WebSocket connections
+                            - Dispose when **expired** after 1 hour
+                        </script>
+                    </section>
                 </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## How to renew the token?
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## How to renew the token?
 
-                        There are several options to get a fresh access token when expired or about to expire.
-                    </script>
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ### Option 1: Redirect again
+                            Here are several options to get a **fresh access token** when expired (or about to expire).
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Option 1: Redirect again
 
-                        Renew by redirecting the browser again to the authorization service and back.
+                            Renew by navigating the browser window again to the authorization service and back.
 
-                        - 😁 Easy to implement
-                        - 😡 Disruptive UX
-                    </script>
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ### Option 2: Redirect in a pop-up
+                            - 😁 Easy to implement
+                            - 😡 Disruptive UX
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Option 2: Redirect in a pop-up / iframe
 
-                        Renew by navigating **a pop-up window** to the authorization service.
-                        Then pass the result to the main window.
+                            Renew by navigating **a pop-up window / iframe** to the authorization service.
+                            Then pass the result to the main window.
 
-                        - 😁 Less disruptive
-                        - 😡 More difficult to implement
-                        - 😡 Pop-up blockers may prevent this
-                    </script>
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ### Option 3: "Silent refresh"
+                            - 😁 Less disruptive
+                            - 😡 More difficult to implement
+                            - 😡 Pop-up blockers may prevent this
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Option 3: "Silent refresh"
 
-                        Renew by [navigating **an iframe**](https://www.scottbrady91.com/OpenID-Connect/Silent-Refresh-Refreshing-Access-Tokens-when-using-the-Implicit-Flow) to the authorization service.
-                        Then pass the result to the parent frame.
+                            Renew by [navigating **a hidden iframe**](https://www.scottbrady91.com/OpenID-Connect/Silent-Refresh-Refreshing-Access-Tokens-when-using-the-Implicit-Flow) to the authorization service.
+                            Then pass the result to the parent frame.
 
-                        - 😁 Refresh does not affect UX
-                        - 😡 More difficult to implement
-                    </script>
+                            - 😁 Refresh does not affect UX
+                            - 😡 More difficult to implement
+                            - 😡 Fall back to other method if UI is required
+                        </script>
+                    </section>
                 </section>
                 <section data-markdown>
                     <script type="text/template">
