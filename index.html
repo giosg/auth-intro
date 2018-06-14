@@ -251,6 +251,7 @@
                                     - `users`
                                     - `reports`
                                 - permissionit määrittää mitä resursseja on mahdollista accessoida frontissa aka top bar
+                                - rajapinta voi tukea useampaa eri permissionia
                                 - itse authentikaatioon ei vaikutusta (`UserApiToken` jne)
                                 - jos tarvetta uudelle, niin mahdollista saada perusteluita vastaan
                             </script>
@@ -261,7 +262,7 @@
 
                                 - valmis helpperi `get_scope_permission`
                                     - käytetään näkymien `permission_classes`:issa
-                                    - `get_scope_permission(['settings'], allow_read=True)`
+                                    - `get_scope_permission(['settings', 'users'], allow_read=True)`
                                 - ottaa listan vaadittuja permissioneita, joista jokin pitää olla käyttäjällä
                             </script>
                         </section>
