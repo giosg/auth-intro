@@ -1404,8 +1404,5 @@ body {
  * CUSTOM STYLES
  *****************/
 .reveal {
-  background: transparent url(../img/logo.png) no-repeat center 10%;
-  background-size: 12% auto; }
-
-section p > strong {
-  color: #fff; }
+  background: transparent url(../img/logo.png) no-repeat 96% 5%;
+  background-size: 8% auto; }

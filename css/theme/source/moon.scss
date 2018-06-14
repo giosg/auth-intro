@@ -55,3 +55,12 @@ $selectionBackgroundColor: $magenta;
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
+
+p, li {
+	& > strong {
+		color: $base2;
+	}
+}
+code {
+	color: $base2;
+}
